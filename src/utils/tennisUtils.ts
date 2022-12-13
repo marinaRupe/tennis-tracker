@@ -8,7 +8,17 @@ export const getSetsWonInMatchForPlayer = (playerId: string, match: Match): numb
   const playerKey = match.playerOneId === playerId ? 'playerOne' : 'playerTwo';
   const opponentKey = match.playerOneId === playerId ? 'playerTwo' : 'playerOne';
 
-  return match.sets.reduce((setsWonAcc, set) => (setsWonAcc + ((set[`${playerKey}Points`] > set[`${opponentKey}Points`]) ? 1 : 0)), 0);
+  let setsWon = 0;
+  for (const set of match.sets) {
+    const playerPoints = set[`${playerKey}Points`];
+    const opponentPoints = set[`${opponentKey}Points`];
+
+    if (playerPoints > opponentPoints) {
+      setsWon++;
+    }
+  }
+
+  return setsWon;
 };
 
 export const getMatchWinner = (playerOneId: string, playerTwoId: string, sets: Set[]): string => {

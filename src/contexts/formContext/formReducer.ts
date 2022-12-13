@@ -4,7 +4,7 @@ import { FormActionTypes } from './formActionTypes';
 
 export type FormReducerAction<TFormState extends FormData> =
   { type: FormActionTypes.InitializeForm; payload: { initialState: TFormState; }; }
-  | { type: FormActionTypes.UpdateProperty; payload: { name: keyof TFormState; value: string; }; }
+  | { type: FormActionTypes.UpdateProperty; payload: { name: keyof TFormState; value: string | undefined; }; }
   | { type: FormActionTypes.UpdateErrors; payload: Validation<TFormState>['errors']; };
 
 export interface FormReducerState<TFormState extends FormData> {

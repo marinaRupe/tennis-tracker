@@ -82,9 +82,11 @@ const Matches: React.FC<Props> = React.memo<Props>(({
   ]);
 
   const renderMatch = (match: MatchModel) => (
-    <div className='matches__item-container'>
+    <div
+      key={match.id}
+      className='matches__item-container'
+    >
       <Match
-        key={match.id}
         id={match.id}
         playerOne={playersById[match.playerOneId]}
         playerTwo={playersById[match.playerTwoId]}

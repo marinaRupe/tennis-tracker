@@ -29,11 +29,18 @@ const AddMatchModal: React.FC<Props> = React.memo<Props>(({
 }) => {
   const handleSaveChanges = useCallback((form: MatchFormData) => {
     const sets: Match['sets'] = [];
+
     for (let setNumber = 1; setNumber <= maximumSetsCount; setNumber++) {
+      const playerOnePointsValue = form[playerOnePointsForSetName(setNumber)];
+      const playerTwoPointsValue = form[playerTwoPointsForSetName(setNumber)];
+
+      // Don't add empty sets
+      if (playerOnePointsValue === undefined || playerTwoPointsValue === undefined) break;
+
       sets.push({
         id: setNumber,
-        playerOnePoints: parseInt(form[playerOnePointsForSetName(setNumber)] as string),
-        playerTwoPoints: parseInt(form[playerTwoPointsForSetName(setNumber)] as string),
+        playerOnePoints: parseInt(playerOnePointsValue as string),
+        playerTwoPoints: parseInt(playerTwoPointsValue as string),
       });
     }
 

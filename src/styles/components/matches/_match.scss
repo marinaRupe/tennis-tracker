@@ -19,6 +19,7 @@
   &__info {
     display: flex;
     flex-direction: row;
+    width: 250px;
 
     &__header {
       font-weight: $val-fontWeightBold;

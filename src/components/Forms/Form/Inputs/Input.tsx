@@ -31,11 +31,12 @@ const Input: React.FC<Props> = React.memo<Props>(({
 
   const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
+
     dispatch?.({
       type: FormActionTypes.UpdateProperty,
       payload: {
         name,
-        value,
+        value: value === '' ? undefined : value,
       },
     });
   }, [
