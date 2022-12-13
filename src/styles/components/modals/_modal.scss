@@ -1,0 +1,13 @@
+.modal {
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .btn {
+      &:not(:first-child) {
+        margin-left: $val-spacing-s;
+      }
+    }
+  }
+}

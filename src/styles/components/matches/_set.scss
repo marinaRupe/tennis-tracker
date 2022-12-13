@@ -1,0 +1,14 @@
+.set {
+  display: flex;
+  flex-direction: column;
+
+  &__id {
+    font-weight: $val-fontWeightBold;
+  }
+
+  &__points {
+    &--winning {
+      font-weight: $val-fontWeightBold;
+    }
+  }
+}

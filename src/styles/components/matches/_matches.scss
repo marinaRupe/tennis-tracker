@@ -1,0 +1,25 @@
+.matches {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-shadow: $val-box-shadow;
+  border-radius: 3px;
+  background-color: $color-white;
+
+  &__item {
+    width: 100%;
+  }
+
+  &__item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding-right: $val-spacing-s;
+    
+    &:not(:first-child) {
+      border-top: 1px solid $color-gray-04;
+    }
+  }
+}

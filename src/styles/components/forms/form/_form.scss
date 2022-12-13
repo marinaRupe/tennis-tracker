@@ -1,0 +1,27 @@
+.form {
+  &__group {
+    &:not(:first-child) {
+      margin-top: $val-spacing-m;
+    }
+  }
+
+  &__label {
+    font-weight: $val-fontWeightBold;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: $val-spacing-m;
+
+    .btn {
+      &:not(:first-child) {
+        margin-left: $val-spacing-s;
+      }
+    }
+  }
+
+  &__error {
+    color: $color-error;
+  }
+}

@@ -1,0 +1,51 @@
+$val-setScoreWidth: 80px;
+$val-setScoreHeight: 40px;
+
+.match-form {
+  &__player-dropdowns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__player-dropdown {
+    width: 370px;
+  }
+
+  &__sets {
+    display: flex;
+    flex-direction: row;
+
+    &__headers {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-weight: $val-fontWeightBold;
+      width: 100px;
+    }
+
+    &__header {
+      min-height: calc($val-setScoreHeight + 50px);
+    }
+  }
+
+  &__set {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: $val-setScoreWidth;
+
+    &:not(:first-child) {
+      margin-left: $val-spacing-s;
+    }
+
+    &__points-container {
+      min-height: calc($val-setScoreHeight + 50px);
+    }
+
+    &__points {
+      width: $val-setScoreWidth;
+      height: $val-setScoreHeight;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.player-info {
+  background-color: $color-white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: $val-fontSizeNormal;
+  box-shadow: $val-box-shadow;
+  padding: $val-spacing-m;
+
+  &__name {
+    font-size: $val-fontSizeBig;
+  }
+
+  &__total-sets {
+    font-size: $val-fontSizeNormal;
+  }
+}

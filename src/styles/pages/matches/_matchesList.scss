@@ -1,0 +1,14 @@
+.matches-list {
+  font-size: $val-fontSizeNormal;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $val-spacing-m;
+    padding: $val-spacing-m;
+    box-shadow: $val-box-shadow;
+    border-radius: 3px;
+    background-color: $color-white;
+  }
+}

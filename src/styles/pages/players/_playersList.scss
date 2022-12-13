@@ -1,0 +1,54 @@
+.players-list {
+  font-size: $val-fontSizeNormal;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $val-spacing-m;
+    padding: $val-spacing-m;
+    box-shadow: $val-box-shadow;
+    border-radius: 3px;
+    background-color: $color-white;
+  }
+
+  &__list {
+    box-shadow: $val-box-shadow;
+    border-radius: 3px;
+    background-color: $color-white;
+
+    &__item-container {
+      display: flex;
+      align-items: center;
+      padding-right: $val-spacing-s;
+
+      &:first-child {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+
+      &:not(:first-child) {
+        border-top: 1px solid $color-gray-04;
+      }
+    }
+
+    &__item {
+      cursor: pointer;
+      box-shadow: none;
+      width: 100%;
+
+      &__index {
+        font-weight: $val-fontWeightBold;
+        align-items: center;
+        display: flex;
+        padding: $val-spacing-m;
+        font-size: $val-fontSizeBig;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.link {
+  font-size: $val-fontSizeBig;
+  color: $color-primary;
+  font-weight: $val-fontWeightBold;
+
+  &:hover, &:active, &:focus {
+    color: $color-light-blue-04;
+  }
+}

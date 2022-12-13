@@ -1,0 +1,42 @@
+.match {
+  background-color: $color-white;
+  display: flex;
+  padding: $val-spacing-s;
+  font-size: $val-fontSizeNormal;
+
+  &__id {
+    font-size: $val-fontSizeBig;
+    font-weight: $val-fontWeightBold;
+    margin-right: $val-spacing-xxl;
+    min-width: 130px;
+
+    &--clickable {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: row;
+
+    &__header {
+      font-weight: $val-fontWeightBold;
+    }
+
+    .sets {
+      margin-left: $val-spacing-m;
+    }
+  
+    .set {
+      margin-left: $val-spacing-s;
+    }
+
+    &__winner {
+      display: flex;
+      align-items: center;
+      margin-left: $val-spacing-xxl;
+      font-size: $val-fontSizeBig;
+    }
+  }
+}
