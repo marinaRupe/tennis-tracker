@@ -72,10 +72,18 @@ const validate = (form: MatchFormData): Validation<MatchFormData> => {
       playerTwoSetsWon++;
     }
 
+    const pointDifference = Math.abs((playerOnePoints ?? 0) - (playerTwoPoints ?? 0));
+
     if ((playerOnePoints ?? 0) < minimumPointsToWinSet && (playerTwoPoints ?? 0) < minimumPointsToWinSet) {
       errors[playerTwoPointsName] = `Minimum ${minimumPointsToWinSet} points are required to win a set`;
-    } else if (Math.abs((playerOnePoints ?? 0) - (playerTwoPoints ?? 0)) < pointDifferenceToWinSet) {
-      errors[playerTwoPointsName] = `The point difference of ${pointDifferenceToWinSet} is required to win a set`;
+    } else if (((playerOnePoints ?? 0) === minimumPointsToWinSet || (playerTwoPoints ?? 0) === minimumPointsToWinSet)
+      && pointDifference < pointDifferenceToWinSet
+    ) {
+      errors[playerTwoPointsName] = `Point difference of at least ${pointDifferenceToWinSet} is required to win a set`;
+    } else if (((playerOnePoints ?? 0) > minimumPointsToWinSet || (playerTwoPoints ?? 0) > minimumPointsToWinSet)
+      && pointDifference !== pointDifferenceToWinSet
+    ) {
+      errors[playerTwoPointsName] = `Point difference of ${pointDifferenceToWinSet} is required if one player scored above ${minimumPointsToWinSet} points`;
     }
   }
 

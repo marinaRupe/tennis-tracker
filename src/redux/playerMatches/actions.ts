@@ -24,6 +24,16 @@ export const removePlayer = (playerId: string): RemovePlayerAction => ({
   payload: playerId,
 });
 
+type SetPlayersPageAction = {
+  type: typeof actionTypes.SET_PLAYERS_PAGE;
+  payload: { pageNumber: number; };
+};
+
+export const setPlayersPage = (pageNumber: number): SetPlayersPageAction => ({
+  type: actionTypes.SET_PLAYERS_PAGE,
+  payload: { pageNumber },
+});
+
 type AddMatchAction = {
   type: typeof actionTypes.ADD_MATCH;
   payload: Match;
@@ -46,5 +56,6 @@ export const removeMatch = (matchId: string): RemoveMatchAction => ({
 
 export type PlayerMatchesAction = AddPlayerAction
   | RemovePlayerAction
+  | SetPlayersPageAction
   | AddMatchAction
   | RemoveMatchAction;

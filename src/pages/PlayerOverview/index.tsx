@@ -14,6 +14,7 @@ import { Player as PlayerModel } from '../../redux/playerMatches/models';
 import * as playerMatchesActions from '../../redux/playerMatches/actions';
 import Matches from '../../components/Matches';
 import PlayerInfo from '../../components/Players/PlayerInfo';
+import { matchOverview } from '../../constants/clientRoutes';
 
 const mapStateToProps = ({ playerMatches }: RootState) => ({
   playersById: playerMatches.playersById,
@@ -85,6 +86,10 @@ const PlayerOverview: React.FC<Props> = React.memo<Props>(({
     removeMatch(matchId);
   }, [removeMatch]);
 
+  const handleClickOnMatch = useCallback((matchId: string) => {
+    window.open(matchOverview(matchId), '_blank');
+  }, []);
+
   if (!player) return null;
 
   return (
@@ -97,6 +102,7 @@ const PlayerOverview: React.FC<Props> = React.memo<Props>(({
       <Matches
         matchIds={playerMatchIds}
         onRemoveMatch={handleRemoveMatch}
+        onClickOnMatch={handleClickOnMatch}
       />
     </div>
   );

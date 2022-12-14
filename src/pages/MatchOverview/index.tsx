@@ -11,7 +11,8 @@ import {
 import { RootState } from '../../redux/store';
 import Match from '../../components/Matches/Match';
 import {
-  Match as MatchModel, Player,
+  Match as MatchModel,
+  Player,
 } from '../../redux/playerMatches/models';
 
 const mapStateToProps = ({ playerMatches }: RootState) => ({

@@ -19,7 +19,7 @@ $val-setScoreHeight: 40px;
     &__headers {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       font-weight: $val-fontWeightBold;
       width: 100px;
     }

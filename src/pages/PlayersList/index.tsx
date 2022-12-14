@@ -2,6 +2,7 @@ import React, {
   useState,
   useCallback,
   useMemo,
+  useEffect,
 } from 'react';
 import {
   connect,
@@ -20,15 +21,19 @@ import PlayerInfo from '../../components/Players/PlayerInfo';
 import Link from '../../components/Navigation/Link';
 import { Player } from '../../redux/playerMatches/models';
 import RemovePlayerModal from './Modals/RemovePlayerModal';
+import Pagination from '../../components/Pagination';
 
 const mapStateToProps = ({ playerMatches }: RootState) => ({
   playersById: playerMatches.playersById,
   playersBySetsWon: playerMatches.playersBySetsWon,
+  playersPageNumber: playerMatches.playersPage.pageNumber,
+  playersPageSize: playerMatches.playersPage.pageSize,
 });
 
 const mapDispatchToProps = {
   addPlayer: playerMatchesActions.addPlayer,
   removePlayer: playerMatchesActions.removePlayer,
+  setPlayersPage: playerMatchesActions.setPlayersPage,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -40,6 +45,9 @@ const PlayersList: React.FC<Props> = React.memo<Props>(({
   playersBySetsWon,
   addPlayer,
   removePlayer,
+  playersPageNumber,
+  playersPageSize,
+  setPlayersPage,
 }) => {
   const [
     addPlayerModalIsOpen,
@@ -53,6 +61,10 @@ const PlayersList: React.FC<Props> = React.memo<Props>(({
     selectedPlayer,
     setSelectedPlayer,
   ] = useState<Nullable<Player>>(null);
+
+  useEffect(() => {
+    setPlayersPage(0);
+  }, [setPlayersPage]);
 
   const openAddPlayerModal = useCallback(() => {
     setAddPlayerModalIsOpen(true);
@@ -92,8 +104,6 @@ const PlayersList: React.FC<Props> = React.memo<Props>(({
     window.open(playerOverview(playerId), '_blank');
   }, []);
 
-  const playerNames: string[] = useMemo(() => (Object.values(playersById).map((player) => player.name)), [playersById]);
-
   const renderPlayer = (player: { playerId: string; totalSetsWon: number; }, index: number) => {
     const playerInfo = playersById[player.playerId];
 
@@ -102,7 +112,7 @@ const PlayersList: React.FC<Props> = React.memo<Props>(({
         key={playerInfo.id}
         className='players-list__list__item-container'
       >
-        <div className='players-list__list__item__index'>#{index + 1}</div>
+        <div className='players-list__list__item__index'>#{index + 1 + playersPageNumber * playersPageSize}</div>
         <PlayerInfo
           id={playerInfo.id}
           name={playerInfo.name}
@@ -119,6 +129,18 @@ const PlayersList: React.FC<Props> = React.memo<Props>(({
       </div>
     );
   };
+
+  const playerNames: string[] = useMemo(() => (Object.values(playersById).map((player) => player.name)), [playersById]);
+
+  const players = useMemo(() => (
+    playersBySetsWon.slice(playersPageNumber * playersPageSize, (playersPageNumber + 1) * playersPageSize)
+  ), [
+    playersBySetsWon,
+    playersPageNumber,
+    playersPageSize,
+  ]);
+
+  const playersTotalPages: number = Math.ceil(playersBySetsWon.length / playersPageSize);
 
   return (
     <div className='players-list'>
@@ -146,8 +168,13 @@ const PlayersList: React.FC<Props> = React.memo<Props>(({
         <Button onClick={openAddPlayerModal}>Add Player</Button>
       </div>
       <div className='players-list__list'>
-        {playersBySetsWon.map(renderPlayer)}
+        {players.map(renderPlayer)}
       </div>
+      <Pagination
+        pageNumber={playersPageNumber}
+        totalPages={playersTotalPages}
+        setPageNumber={setPlayersPage}
+      />
     </div>
   );
 });

@@ -11,12 +11,24 @@ export interface PlayerMatchesState {
   playersById: Record<string, Player>;
   matchesById: Record<string, Match>;
   playersBySetsWon: { playerId: string; totalSetsWon: number; }[];
+  playersPage: {
+    pageNumber: number;
+    pageSize: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
 }
 
 const initialState: PlayerMatchesState = {
   playersById: {},
   matchesById: {},
   playersBySetsWon: [],
+  playersPage: {
+    pageNumber: 0,
+    pageSize: 10,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
 };
 
 const getUpdatedPlayersBySetsWonForMatch = (
@@ -83,15 +95,44 @@ export default function(state = initialState, action: PlayerMatchesAction): Play
       }), {} as typeof state.matchesById);
 
       // Remove total sets won for player
-      const newPlayersBySetsWon = state.playersBySetsWon
+      const playersBySetsWonWithoutPlayer = state.playersBySetsWon
         .filter((playerSetsWon) => playerSetsWon.playerId !== playerToRemoveId);
+
+      // Remove total sets won by other players in removed matches
+      const matchesPlayedByPlayer = allMatches
+        .filter((match) => match.playerOneId === playerToRemoveId || match.playerTwoId === playerToRemoveId);
+
+      const setsCountToRemoveByPlayer: Record<string, number> = {};
+      for (const match of matchesPlayedByPlayer) {
+        const otherPlayerId = match.playerOneId === playerToRemoveId ? match.playerTwoId : match.playerOneId;
+        const setsWonByOtherPlayer: number = getSetsWonInMatchForPlayer(otherPlayerId, match);
+
+        if (!setsCountToRemoveByPlayer[otherPlayerId]) {
+          setsCountToRemoveByPlayer[otherPlayerId] = 0;
+        }
+
+        setsCountToRemoveByPlayer[otherPlayerId] += setsWonByOtherPlayer;
+      }
+
+      const newPlayersBySetsWon = playersBySetsWonWithoutPlayer.map((playerSetsWon) => ({
+        ...playerSetsWon,
+        totalSetsWon: playerSetsWon.totalSetsWon - (setsCountToRemoveByPlayer[playerSetsWon.playerId] ?? 0),
+      }));
 
       return {
         ...state,
         playersById: newPlayersById,
         matchesById: matchesByIdToKeep,
-        playersBySetsWon: newPlayersBySetsWon,
+        playersBySetsWon: sortByProperty(newPlayersBySetsWon, 'totalSetsWon', false),
       };
+    case actionTypes.SET_PLAYERS_PAGE:
+      return ({
+        ...state,
+        playersPage: {
+          ...state.playersPage,
+          pageNumber: action.payload.pageNumber,
+        },
+      });
     case actionTypes.ADD_MATCH:
       const newMatch = action.payload;
 
