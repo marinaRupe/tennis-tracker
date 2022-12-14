@@ -28,6 +28,7 @@ interface FormComposition {
   Label: typeof Label;
   Input: typeof Input;
   Dropdown: typeof Dropdown;
+  Buttons: typeof Buttons;
 }
 
 interface OwnProps<TFormData extends FormData = FormData> {
@@ -111,5 +112,6 @@ Form.Group = Group;
 Form.Label = Label;
 Form.Input = Input;
 Form.Dropdown = Dropdown;
+Form.Buttons = Buttons;
 
 export default Form;

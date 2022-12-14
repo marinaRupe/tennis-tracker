@@ -14,8 +14,6 @@ export interface PlayerMatchesState {
   playersPage: {
     pageNumber: number;
     pageSize: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
   };
 }
 
@@ -26,8 +24,6 @@ const initialState: PlayerMatchesState = {
   playersPage: {
     pageNumber: 0,
     pageSize: 10,
-    hasNextPage: false,
-    hasPreviousPage: false,
   },
 };
 
